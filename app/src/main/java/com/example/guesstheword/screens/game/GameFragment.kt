@@ -18,7 +18,7 @@ class GameFragment : Fragment() {
 
     private lateinit var binding: GameFragmentBinding
 
-    private val gameVM: GameViewModel by viewModels()
+    private val gameVM: GameViewModel by viewModels{GameViewModel.Factory}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

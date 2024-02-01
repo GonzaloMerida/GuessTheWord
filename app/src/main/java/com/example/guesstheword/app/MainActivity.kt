@@ -1,7 +1,8 @@
-package com.example.guesstheword
+package com.example.guesstheword.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.guesstheword.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

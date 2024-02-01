@@ -3,10 +3,34 @@ package com.example.guesstheword.screens.game
 import android.provider.Settings.Global.getString
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewmodel.CreationExtras
 import com.google.android.material.snackbar.Snackbar
 import com.example.guesstheword.R
+import com.example.guesstheword.app.MyApp
+import com.example.guesstheword.repositories.WordsRepository
 
-class GameViewModel : ViewModel() {
+class GameViewModel(val wordsRepository: WordsRepository) : ViewModel() {
+
+    companion object {
+        const val WORD_EMPTY = "no word"
+
+        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(
+                modelClass: Class<T>,
+                extras: CreationExtras
+            ): T {
+                // Get the Application object from extras
+                val application = checkNotNull(extras[APPLICATION_KEY])
+
+                return GameViewModel(
+                    (application as MyApp).appContainer.wordsRepository,
+                ) as T
+            }
+        }
+    }
 
     private var _score : Int = 0
     val score get() = _score
@@ -19,7 +43,7 @@ class GameViewModel : ViewModel() {
 
     init {
         Log.i("GameViewModel", "GameViewModel creado!")
-        resetList()
+        _wordList = wordsRepository.initList()
         nextWord()
     }
     override fun onCleared() {
@@ -27,32 +51,6 @@ class GameViewModel : ViewModel() {
         Log.i("GameViewModel", "GameViewModel destruido!")
     }
 
-    fun resetList() {
-        _wordList = mutableListOf(
-            "queen",
-            "hospital",
-            "basketball",
-            "cat",
-            "change",
-            "snail",
-            "soup",
-            "calendar",
-            "sad",
-            "desk",
-            "guitar",
-            "home",
-            "railway",
-            "zebra",
-            "jelly",
-            "car",
-            "crow",
-            "trade",
-            "bag",
-            "roll",
-            "bubble"
-        )
-        wordList.shuffle()
-    }
 
     fun onSkip() {
         _score--
@@ -79,9 +77,6 @@ class GameViewModel : ViewModel() {
         //    Snackbar.make(requireView(),R.string.word_empty, Snackbar.LENGTH_SHORT).show()
         //    disableButtons()
        // }
-    }
-    companion object{
-        const val WORD_EMPTY = "no word"
     }
 
 }
