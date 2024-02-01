@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.guesstheword.R
 import com.example.guesstheword.databinding.GameFragmentBinding
+import com.google.android.material.snackbar.Snackbar
 
 /**
  * Fragment where the game is played
@@ -15,13 +17,15 @@ class GameFragment : Fragment() {
 
     private lateinit var binding: GameFragmentBinding
 
-    private val gameVM : GameViewModel by viewModels()
+    private val gameVM: GameViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         // Inflate view and obtain an instance of the binding class
-        binding = GameFragmentBinding.inflate(inflater,container,false)
+        binding = GameFragmentBinding.inflate(inflater, container, false)
 
         //initialization.
         updateScoreText()
@@ -52,13 +56,17 @@ class GameFragment : Fragment() {
 
     private fun updateWordText() {
         binding.wordText.text = gameVM.word
+        if (gameVM.word == GameViewModel.WORD_EMPTY) {
+            binding.wordText.text = getString(R.string.word_empty)
+            disableButtons()
+        }
     }
 
     private fun updateScoreText() {
         binding.scoreText.text = gameVM.score.toString()
     }
 
-    private fun disableButtons(){
+    private fun disableButtons() {
         binding.correctButton.isEnabled = false
         binding.skipButton.isEnabled = false
     }

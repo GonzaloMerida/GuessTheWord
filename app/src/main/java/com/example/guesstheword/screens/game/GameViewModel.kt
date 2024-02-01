@@ -4,6 +4,7 @@ import android.provider.Settings.Global.getString
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.example.guesstheword.R
 
 class GameViewModel : ViewModel() {
 
@@ -15,6 +16,8 @@ class GameViewModel : ViewModel() {
 
     private var _wordList : MutableList<String> = mutableListOf<String>()
     val wordList get() = _wordList
+
+
 
 
     init {
@@ -69,7 +72,10 @@ class GameViewModel : ViewModel() {
             //Select and remove a word from the list
             _word = wordList.removeAt(0)
         }
-       // else{
+        else{
+            _word = WORD_EMPTY
+        }
+       //else{
        //     _word = getString(R.string.word_empty)
             //Snackbar.make(binding.Root,R.string.word_empty, Snackbar.LENGTH_SHORT).show()
             //de forma automática recoge el view en el que se ha pulsado con requireView()
@@ -77,6 +83,8 @@ class GameViewModel : ViewModel() {
         //    disableButtons()
        // }
     }
-
+    companion object{
+        const val WORD_EMPTY = "no word"
+    }
 
 }
