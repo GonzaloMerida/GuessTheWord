@@ -16,11 +16,13 @@
 
 package com.example.guesstheword.screens.score
 
+import ScoreViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.guesstheword.databinding.ScoreFragmentBinding
 
@@ -31,15 +33,27 @@ class ScoreFragment : Fragment() {
 
     private lateinit var binding : ScoreFragmentBinding
 
+    private val args : ScoreFragmentArgs by navArgs()
+
+    private val scoreVM : ScoreViewModel by viewModels()
+
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
 
         // Inflate view and obtain an instance of the binding class.
         binding = ScoreFragmentBinding.inflate(inflater,container,false)
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        scoreVM.setFinalScore(args.finalScore)
+
+        binding.scoreText.text = scoreVM.finalScore.toString()
     }
 }

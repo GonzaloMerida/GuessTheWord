@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.guesstheword.R
 import com.example.guesstheword.databinding.GameFragmentBinding
 import com.google.android.material.snackbar.Snackbar
@@ -34,9 +35,17 @@ class GameFragment : Fragment() {
         //Listeners
         binding.correctButton.setOnClickListener { onCorrect() }
         binding.skipButton.setOnClickListener { onSkip() }
+        binding.endGameButton.setOnClickListener { onEndGame() }
 
         return binding.root
 
+    }
+
+    private fun onEndGame() {
+        Snackbar.make(requireView(), getString(R.string.end_of_game), Snackbar.LENGTH_SHORT).show()
+        val action = GameFragmentDirections.actionGameFragmentToScoreFragment()
+        action.finalScore = gameVM.score
+        findNavController().navigate(action)
     }
 
     fun onSkip() {

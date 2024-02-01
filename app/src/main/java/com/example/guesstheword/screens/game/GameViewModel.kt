@@ -17,9 +17,6 @@ class GameViewModel : ViewModel() {
     private var _wordList : MutableList<String> = mutableListOf<String>()
     val wordList get() = _wordList
 
-
-
-
     init {
         Log.i("GameViewModel", "GameViewModel creado!")
         resetList()

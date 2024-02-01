@@ -18,7 +18,12 @@
         android:id="@+id/scoreFragment"
         android:name="com.example.guesstheword.screens.score.ScoreFragment"
         android:label="ScoreFragment"
-        tools:layout="@layout/score_fragment"/>
+        tools:layout="@layout/score_fragment">
+        <argument
+            android:name="final_score"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.example.guesstheword.screens.game.GameFragment"
